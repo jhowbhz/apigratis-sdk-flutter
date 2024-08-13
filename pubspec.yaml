@@ -1,6 +1,6 @@
 name: apigratis_sdk_flutter
 description: A ideia desse SDK é otimizar o tempo de código dos usuários auxiliando na integração com a plataforma.
-version: 0.0.1
+version: 0.0.9
 repository: https://github.com/jhowbhz/apigratis-sdk-flutter
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   # path: ^1.8.0
   http: ^1.2.2
-  json_annotation: ^4.0.1
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   lints: ^4.0.0

@@ -1,27 +1,41 @@
+import 'dart:convert';
 import 'package:apigratis_sdk_flutter/apigratis_sdk_flutter.dart';
-import 'package:test/test.dart';
 
-void main() {
-  test('sendText should return a response', () async {
-    final sdk = ApiGratisSdk();
+// Exemplo de uso
+void main() async {
 
-    final request = ApiRequest(
-      credentials: Credentials(
-        deviceToken: 'f937d7f6-7b36-4872-b666-421078131733',
-        bearerToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...',
-      ),
-      body: Body(
-        message: 'Hello World for Flutter',
-        phone: '5531994359434',
-        timeTyping: 1,
-      ),
-    );
+  final whatsappService = WhatsAppService();
+  final cpfService = CpfService();
+  final smsService = SmsService();
 
-    try {
-      final response = await sdk.sendText(request);
-      print('Response: $response');
-    } catch (e) {
-      print('Error: $e');
-    }
-  });
+  final request = ApiRequest(
+    credentials: Credentials(
+      deviceToken: 'YOUR_DEVICE_TOKEN',
+      bearerToken: 'YOUR_BEARER_TOKEN',
+    ),
+    body: Body(
+      text: 'Hello World for Dart',
+      number: '5531994359434',
+      timeTyping: 1,
+    ),
+  );
+
+  try {
+
+    // Enviar mensagem no WhatsApp
+    final whatsappResponse = await whatsappService.sendText(request);
+    print('Resposta do WhatsApp: ${jsonEncode(whatsappResponse)}');
+
+    // Consultar CPF
+    final cpfResponse = await cpfService.dados(request);
+    print('Resposta do CPF: ${jsonEncode(cpfResponse)}');
+
+    // Enviar SMS
+    final smsResponse = await smsService.send(request);
+    print('Resposta do SMS: ${jsonEncode(smsResponse)}');
+
+  } catch (e) {
+    print('Erro: $e');
+  }
+  
 }

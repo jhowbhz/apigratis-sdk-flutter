@@ -4,6 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'apigratis_sdk_flutter.g.dart';
 
+// Definições dos modelos
 @JsonSerializable()
 class Credentials {
   final String deviceToken;
@@ -18,11 +19,11 @@ class Credentials {
 
 @JsonSerializable()
 class Body {
-  final String message;
-  final String phone;
+  final String text;
+  final String number;
   final int timeTyping;
 
-  Body({required this.message, required this.phone, required this.timeTyping});
+  Body({required this.text, required this.number, required this.timeTyping});
 
   factory Body.fromJson(Map<String, dynamic> json) => _$BodyFromJson(json);
   Map<String, dynamic> toJson() => _$BodyToJson(this);
@@ -40,11 +41,14 @@ class ApiRequest {
   Map<String, dynamic> toJson() => _$ApiRequestToJson(this);
 }
 
-class ApiGratisSdk {
+// Classe base para chamadas HTTP
+class ApiService {
   final String baseUrl = 'https://gateway.apibrasil.io/api/v2/';
 
-  Future<Map<String, dynamic>> sendText(ApiRequest request) async {
-    final url = Uri.parse('$baseUrl/whatsapp');
+  Future<Map<String, dynamic>> _sendRequest(String endpoint, ApiRequest request) async {
+    final url = Uri.parse('$baseUrl$endpoint');
+    print('Request URL: $url'); // Debug: Mostre a URL
+
     final headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${request.credentials.bearerToken}',
@@ -60,7 +64,36 @@ class ApiGratisSdk {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to send request');
+      throw Exception('Failed to send request. Status Code: ${response.statusCode}, Response Body: ${response.body}');
     }
+  }
+}
+
+// Serviço de WhatsApp
+class WhatsAppService extends ApiService {
+  Future<Map<String, dynamic>> sendText(ApiRequest request) {
+    return _sendRequest('whatsapp/sendText', request);
+  }
+
+  Future<Map<String, dynamic>> sendFile(ApiRequest request) {
+    return _sendRequest('whatsapp/sendFile', request);
+  }
+
+  Future<Map<String, dynamic>> sendImage(ApiRequest request) {
+    return _sendRequest('whatsapp/sendImage', request);
+  }
+}
+
+// Serviço de CPF
+class CpfService extends ApiService {
+  Future<Map<String, dynamic>> dados(ApiRequest request) {
+    return _sendRequest('cpf/dados', request);
+  }
+}
+
+// Serviço de SMS
+class SmsService extends ApiService {
+  Future<Map<String, dynamic>> send(ApiRequest request) {
+    return _sendRequest('sms/send', request);
   }
 }
