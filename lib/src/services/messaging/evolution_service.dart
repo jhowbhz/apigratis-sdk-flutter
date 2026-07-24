@@ -1,5 +1,6 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
+import '../base_service.dart';
 
 /// Evolution API (`POST /evolution/{controller}/{action}`).
 /// Uses DeviceToken for authentication.
@@ -7,7 +8,7 @@ class EvolutionService extends BaseService {
   EvolutionService(super.http);
 
   @override
-  String buildUrl(String path) => http.joinUrl(http.baseUrl, 'evolution/$path');
+  String buildUrl(String path) => joinUrl(http.baseUrl, 'evolution/$path');
 
   /// Instance operations
   Future<Json> createInstance(Json body, [RequestOptions options = const RequestOptions()]) =>
@@ -62,7 +63,8 @@ class EvolutionService extends BaseService {
   Future<Json> sendWhatsAppAudio(Json body, [RequestOptions options = const RequestOptions()]) =>
       post('message/sendWhatsAppAudio', body, options);
 
-  Future<Json> deleteMessageForEveryone(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> deleteMessageForEveryone(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       post('chat/deleteMessageForEveryone', body, options);
 
   /// Chat operations
@@ -81,10 +83,12 @@ class EvolutionService extends BaseService {
   Future<Json> fetchProfile(Json body, [RequestOptions options = const RequestOptions()]) =>
       post('chat/fetchProfile', body, options);
 
-  Future<Json> fetchProfilePictureUrl(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> fetchProfilePictureUrl(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       post('chat/fetchProfilePictureUrl', body, options);
 
-  Future<Json> updatePrivacySettings(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> updatePrivacySettings(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       post('chat/updatePrivacySettings', body, options);
 
   Future<Json> updateProfileName(Json body, [RequestOptions options = const RequestOptions()]) =>
@@ -99,7 +103,8 @@ class EvolutionService extends BaseService {
   Future<Json> removeProfilePicture(Json body, [RequestOptions options = const RequestOptions()]) =>
       post('chat/removeProfilePicture', body, options);
 
-  Future<Json> getBase64FromMediaMessage(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getBase64FromMediaMessage(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       post('chat/getBase64FromMediaMessage', body, options);
 
   Future<Json> whatsappNumbers(Json body, [RequestOptions options = const RequestOptions()]) =>
@@ -130,7 +135,8 @@ class EvolutionService extends BaseService {
   Future<Json> sendInvite(Json body, [RequestOptions options = const RequestOptions()]) =>
       post('group/sendInvite', body, options);
 
-  Future<Json> updateGroupDescription(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> updateGroupDescription(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       post('group/updateGroupDescription', body, options);
 
   Future<Json> updateGroupPicture(Json body, [RequestOptions options = const RequestOptions()]) =>
@@ -164,7 +170,8 @@ class EvolutionService extends BaseService {
       post('settings/set', body, options);
 
   /// Generic request for any evolution path
-  Future<Json> request(String controller, String action, [Json? body, RequestOptions options = const RequestOptions()]) {
+  Future<Json> request(String controller, String action,
+      [Json? body, RequestOptions options = const RequestOptions()]) {
     final path = '$controller/$action';
     return post(path, body, options);
   }

@@ -1,10 +1,11 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// CEP + geolocalização device-based (`/cep/{action}`).
 /// Requires DeviceToken.
 class CepService extends DeviceProxyService {
-  CepService(super.http) : super(http, 'cep');
+  CepService(ApiHttpClient http) : super(http, 'cep');
 
   /// Consulta CEP: `POST /cep/cep`.
   Future<Json> cep(Json body, [RequestOptions options = const RequestOptions()]) =>

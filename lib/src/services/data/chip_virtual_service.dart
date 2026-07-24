@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Chip Virtual (`/chip/virtual/{action}`).
 class ChipVirtualService extends BaseService {

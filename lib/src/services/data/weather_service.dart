@@ -1,10 +1,11 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// Clima (`/weather/{action}`).
 /// Device-based (requires DeviceToken).
 class WeatherService extends DeviceProxyService {
-  WeatherService(super.http) : super(http, 'weather');
+  WeatherService(ApiHttpClient http) : super(http, 'weather');
 
   /// Por cidade: `POST /weather/city`.
   Future<Json> city(Json body, [RequestOptions options = const RequestOptions()]) =>

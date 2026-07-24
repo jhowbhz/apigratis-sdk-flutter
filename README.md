@@ -80,7 +80,6 @@ final api = result.client;
 // Contas com 2FA:
 final session = await api.auth.login({'email': email, 'password': password});
 if (session['requires_2fa'] == true) {
-  await api.auth.send2fa({'challenge': session['challenge'], 'method': 'email'});
   await api.auth.verify2fa({'challenge': session['challenge'], 'code': '000000'});
 }
 ```
@@ -97,9 +96,9 @@ A API Brasil tem duas famílias de serviços:
 Para os serviços device-based, crie um device com a `SecretKey` da API desejada (painel APIBrasil) e use o `device_token` retornado:
 
 ```dart
-final device = await api.devices.store(
+final device = await api.devices.create(
   {'device_name': 'meu-bot', 'type': 'server'},
-  secretKey: 'SUA_SECRET_KEY'
+  const RequestOptions(secretKey: 'SUA_SECRET_KEY'),
 );
 
 api.setDeviceToken(device['device']['device_token']);
@@ -163,7 +162,7 @@ final socios = await api.consulta.cnpj({'cnpj': '00000000000000', 'tipo': 'lista
 final veiculo = await api.consulta.veiculos({'placa': 'ABC1234'});
 
 // Qualquer produto do catálogo
-final score = await api.consulta.generic('cpf', {'cpf': '00000000000', 'tipo': 'serasa-score-pf'});
+final score = await api.consulta.consulta('cpf', {'cpf': '00000000000', 'tipo': 'serasa-score-pf'});
 
 // Homologação (sandbox, sem cobrança)
 final teste = await api.consulta.cpf({'cpf': '00000000000', 'homolog': true});
@@ -187,11 +186,17 @@ await api.sms.sendWithCredits({'number': '5511999999999', 'message': 'Olá!'});
 ### Pagamentos e recargas
 
 ```dart
-final pix = await api.payments.pixGenerate('inter', {'amount': 100});
-final status = await api.payments.pixStatus('inter', pix['txId']);
+// Recargas de saldo
+final pix = await api.payments.rechargePix({'amount': 100});
+final boleto = await api.payments.rechargeBoleto({'amount': 150});
+final cartao = await api.payments.rechargeCard({'amount': 200});
 
-final boleto = await api.payments.boletoGenerate('sicoob', {'amount': 150});
-final pdf = await api.payments.boletoPdf('sicoob', boleto['id']); // bytes
+// Pagamento de faturas
+await api.payments.payInvoicePix('INVOICE_ID', {});
+
+// Histórico e métodos disponíveis
+final historico = await api.payments.payments();
+final metodos = await api.payments.paymentMethods();
 ```
 
 ### Múltiplos devices

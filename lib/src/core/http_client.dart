@@ -137,7 +137,7 @@ class ApiHttpClient {
             url: url,
             attempt: attempt,
             delay: delay,
-            reason: error is ApiBrasilError ? error.message : '$error',
+            reason: error.message,
           ));
           await sleep(delay);
           continue;

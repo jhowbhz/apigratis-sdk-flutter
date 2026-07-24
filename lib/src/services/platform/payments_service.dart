@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Recargas e pagamentos (PIX, boleto, cartão) (`/recharge`, `/payments`, `/invoices/{id}/pay`).
 class PaymentsService extends BaseService {
@@ -18,15 +18,18 @@ class PaymentsService extends BaseService {
       http.post('recharge/card', body, options);
 
   /// Pagamento de fatura via PIX: `POST /invoices/{id}/pay/pix`.
-  Future<Json> payInvoicePix(String id, Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> payInvoicePix(String id, Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       http.post('invoices/$id/pay/pix', body, options);
 
   /// Pagamento de fatura via boleto: `POST /invoices/{id}/pay/boleto`.
-  Future<Json> payInvoiceBoleto(String id, Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> payInvoiceBoleto(String id, Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       http.post('invoices/$id/pay/boleto', body, options);
 
   /// Pagamento de fatura via cartão: `POST /invoices/{id}/pay/card`.
-  Future<Json> payInvoiceCard(String id, Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> payInvoiceCard(String id, Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       http.post('invoices/$id/pay/card', body, options);
 
   /// Histórico de pagamentos: `GET /payments`.

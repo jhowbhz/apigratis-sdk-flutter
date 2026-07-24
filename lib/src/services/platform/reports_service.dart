@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Relatórios e dashboard de consumo (`/reports/{action}`).
 class ReportsService extends BaseService {

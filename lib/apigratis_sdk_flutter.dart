@@ -55,6 +55,13 @@
 /// - [ReportsService] - Dashboard, consumption, errors
 /// - [IpWhitelistService], [BearerRateLimitService]
 ///
+/// ## Migração da 0.0.x
+///
+/// As classes legadas foram renomeadas com o prefixo `Legacy` para liberar os
+/// nomes aos serviços novos: `WhatsAppService` → [LegacyWhatsAppService],
+/// `CpfService` → [LegacyCpfService], `SmsService` → [LegacySmsService].
+/// Todas estão `@Deprecated` — prefira `ApiBrasil()`.
+///
 /// ## Configuration
 ///
 /// Credentials can be passed directly or via environment variables:
@@ -67,18 +74,10 @@
 /// {@endtemplate}
 library apigratis_sdk_flutter;
 
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 
-import 'src/core/http_client.dart';
-import 'src/core/types.dart';
-import 'src/core/errors.dart';
-import 'src/core/env.dart';
-import 'src/generated/catalog.dart';
 import 'src/api_brasil.dart';
-
-part 'apigratis_sdk_flutter.g.dart';
+import 'src/core/http_client.dart';
 
 // Re-export core types
 export 'src/core/http_client.dart';
@@ -132,6 +131,8 @@ export 'src/services/platform/bearer_rate_limit_service.dart';
 export 'src/services/platform/reports_service.dart';
 export 'src/services/platform/catalog_service.dart';
 
+part 'apigratis_sdk_flutter.g.dart';
+
 // Modelos de dados (mantidos para compatibilidade)
 /// Credentials for device-based authentication.
 @JsonSerializable()
@@ -145,8 +146,7 @@ class Credentials {
   /// Creates credentials.
   Credentials({required this.deviceToken, required this.bearerToken});
 
-  factory Credentials.fromJson(Map<String, dynamic> json) =>
-      _$CredentialsFromJson(json);
+  factory Credentials.fromJson(Map<String, dynamic> json) => _$CredentialsFromJson(json);
   Map<String, dynamic> toJson() => _$CredentialsToJson(this);
 }
 
@@ -179,14 +179,13 @@ class ApiRequest {
 
   ApiRequest({required this.credentials, required this.body});
 
-  factory ApiRequest.fromJson(Map<String, dynamic> json) =>
-      _$ApiRequestFromJson(json);
+  factory ApiRequest.fromJson(Map<String, dynamic> json) => _$ApiRequestFromJson(json);
   Map<String, dynamic> toJson() => _$ApiRequestToJson(this);
 }
 
-/// Legacy service for backwards compatibility.
+/// Serviço legado, mantido apenas para migração da 0.0.x.
 ///
-/// Uses [ApiBrasil] internally. Prefer using [ApiBrasil] directly.
+/// Usa [ApiBrasil] internamente — prefira [ApiBrasil] diretamente.
 @Deprecated('Use ApiBrasil directly')
 class ApiService {
   final String baseUrl = 'https://gateway.apibrasil.io/api/v2/';
@@ -196,15 +195,15 @@ class ApiService {
       : _api = ApiBrasil(bearerToken: bearerToken, deviceToken: deviceToken);
 
   Future<Map<String, dynamic>> _sendRequest(String endpoint, ApiRequest request) async {
-    return _api.request('POST', endpoint, body: request.toJson());
+    final data = await _api.request('POST', endpoint, body: request.toJson());
+    return asJsonMap(data);
   }
 }
 
-/// Legacy WhatsApp service. Use [ApiBrasil.whatsapp] instead.
+/// WhatsApp legado da 0.0.x. Use [ApiBrasil.whatsapp] (tipo `WhatsAppService`).
 @Deprecated('Use ApiBrasil.whatsapp')
-class WhatsAppService extends ApiService {
-  WhatsAppService({String? bearerToken, String? deviceToken})
-      : super(bearerToken: bearerToken, deviceToken: deviceToken);
+class LegacyWhatsAppService extends ApiService {
+  LegacyWhatsAppService({super.bearerToken, super.deviceToken});
 
   Future<Map<String, dynamic>> sendText(ApiRequest request) {
     return _sendRequest('whatsapp/sendText', request);
@@ -219,22 +218,20 @@ class WhatsAppService extends ApiService {
   }
 }
 
-/// Legacy CPF service. Use [ApiBrasil.consulta.cpfDados] instead.
+/// CPF legado da 0.0.x. Use `ApiBrasil.consulta.cpf` / `ApiBrasil.dados.cpf`.
 @Deprecated('Use ApiBrasil.consulta')
-class CpfService extends ApiService {
-  CpfService({String? bearerToken, String? deviceToken})
-      : super(bearerToken: bearerToken, deviceToken: deviceToken);
+class LegacyCpfService extends ApiService {
+  LegacyCpfService({super.bearerToken, super.deviceToken});
 
   Future<Map<String, dynamic>> dados(ApiRequest request) {
     return _sendRequest('cpf/dados', request);
   }
 }
 
-/// Legacy SMS service. Use [ApiBrasil.sms] instead.
+/// SMS legado da 0.0.x. Use [ApiBrasil.sms] (tipo `SmsService`).
 @Deprecated('Use ApiBrasil.sms')
-class SmsService extends ApiService {
-  SmsService({String? bearerToken, String? deviceToken})
-      : super(bearerToken: bearerToken, deviceToken: deviceToken);
+class LegacySmsService extends ApiService {
+  LegacySmsService({super.bearerToken, super.deviceToken});
 
   Future<Map<String, dynamic>> send(ApiRequest request) {
     return _sendRequest('sms/send', request);

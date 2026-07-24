@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// URA reversa / ligações (`/ura/call/*`).
 class UraService extends BaseService {

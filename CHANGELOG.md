@@ -15,7 +15,23 @@ totalmente retrocompatível: nada da interface antiga foi alterado.
 - **Hierarquia de erros**: `ValidationError`, `AuthenticationError`, `InsufficientBalanceError`, `PermissionError`, `NotFoundError`, `RateLimitError`, `ServerError`, `NetworkError`, `TimeoutError` — todas estendendo `ApiBrasilError`.
 - **Variáveis de ambiente / `--dart-define`**: `APIBRASIL_BEARER_TOKEN`, `APIBRASIL_DEVICE_TOKEN`, `APIBRASIL_SECRET_KEY`, `APIBRASIL_BASE_URL` lidas automaticamente.
 - **Catálogo gerado**: `Catalog.whatsappActions`, `Catalog.evolutionPaths`, `Catalog.whatsmeowActions`, `Catalog.consultaServicos`, `Catalog.consultaTipos` (210+ tipos) e `Catalog.serviceActions`.
-- **Compatibilidade retroativa**: classes legadas `ApiService`, `WhatsAppService`, `CpfService`, `SmsService` mantidas com mesmo contrato (sempre `POST`, resposta `Map`, erros como exceção). Marcadas como `@Deprecated` — prefira `ApiBrasil()`.
+- **Interface legada preservada**: `ApiService`, `LegacyWhatsAppService`, `LegacyCpfService`, `LegacySmsService` mantêm o mesmo contrato da 0.0.x (sempre `POST`, resposta `Map`, erros como exceção). Marcadas como `@Deprecated` — prefira `ApiBrasil()`.
+
+### Correções
+
+- Todos os serviços agora **compartilham um único `ApiHttpClient`**. Antes cada
+  um criava o seu, então `setBearerToken()` (ex.: após `auth.login()`) não
+  valia para os demais módulos e `close()` deixava conexões abertas.
+- Corrigidos os imports internos da biblioteca, que impediam a compilação do pacote.
+
+### Mudanças incompatíveis (vindo da 0.0.9)
+
+- Classes legadas renomeadas com o prefixo `Legacy` para liberar os nomes aos
+  serviços novos: `WhatsAppService` → `LegacyWhatsAppService`, `CpfService` →
+  `LegacyCpfService`, `SmsService` → `LegacySmsService`. `ApiService`,
+  `ApiRequest`, `Credentials` e `Body` seguem com os nomes originais.
+  Agora `WhatsAppService` e `SmsService` referem-se aos serviços novos
+  (`api.whatsapp`, `api.sms`).
 
 ### Compatibilidade
 

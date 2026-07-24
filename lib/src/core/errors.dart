@@ -40,7 +40,9 @@ class ApiBrasilError implements Exception {
 
   @override
   String toString() {
-    final buffer = StringBuffer(runtimeType.toString())..write(': ')..write(message);
+    final buffer = StringBuffer(runtimeType.toString())
+      ..write(': ')
+      ..write(message);
     if (status != null) buffer.write(' (HTTP $status)');
     if (code != null) buffer.write(' [$code]');
     return buffer.toString();
@@ -60,26 +62,22 @@ class TimeoutError extends NetworkError {
 
 /// HTTP 400/422 — payload inválido.
 class ValidationError extends ApiBrasilError {
-  ValidationError(super.message,
-      {super.status, super.code, super.response, super.cause});
+  ValidationError(super.message, {super.status, super.code, super.response, super.cause});
 }
 
 /// HTTP 401 — Bearer Token ausente, inválido ou expirado.
 class AuthenticationError extends ApiBrasilError {
-  AuthenticationError(super.message,
-      {super.status, super.code, super.response, super.cause});
+  AuthenticationError(super.message, {super.status, super.code, super.response, super.cause});
 }
 
 /// HTTP 402 — saldo/créditos insuficientes.
 class InsufficientBalanceError extends ApiBrasilError {
-  InsufficientBalanceError(super.message,
-      {super.status, super.code, super.response, super.cause});
+  InsufficientBalanceError(super.message, {super.status, super.code, super.response, super.cause});
 }
 
 /// HTTP 403 — sem permissão (ex: API exige conta PJ).
 class PermissionError extends ApiBrasilError {
-  PermissionError(super.message,
-      {super.status, super.code, super.response, super.cause});
+  PermissionError(super.message, {super.status, super.code, super.response, super.cause});
 }
 
 /// HTTP 404/410 — recurso não encontrado ou desativado.
@@ -159,24 +157,20 @@ ApiBrasilError createApiError(
   final code = _extractCode(data);
 
   if (status == 400 || status == 422) {
-    return ValidationError(message,
-        status: status, code: code, response: data, cause: cause);
+    return ValidationError(message, status: status, code: code, response: data, cause: cause);
   }
   if (status == 401) {
-    return AuthenticationError(message,
-        status: status, code: code, response: data, cause: cause);
+    return AuthenticationError(message, status: status, code: code, response: data, cause: cause);
   }
   if (status == 402) {
     return InsufficientBalanceError(message,
         status: status, code: code, response: data, cause: cause);
   }
   if (status == 403) {
-    return PermissionError(message,
-        status: status, code: code, response: data, cause: cause);
+    return PermissionError(message, status: status, code: code, response: data, cause: cause);
   }
   if (status == 404 || status == 410) {
-    return NotFoundError(message,
-        status: status, code: code, response: data, cause: cause);
+    return NotFoundError(message, status: status, code: code, response: data, cause: cause);
   }
   if (status == 429) {
     return RateLimitError(
@@ -189,9 +183,7 @@ ApiBrasilError createApiError(
     );
   }
   if (status >= 500) {
-    return ServerError(message,
-        status: status, code: code, response: data, cause: cause);
+    return ServerError(message, status: status, code: code, response: data, cause: cause);
   }
-  return ApiBrasilError(message,
-      status: status, code: code, response: data, cause: cause);
+  return ApiBrasilError(message, status: status, code: code, response: data, cause: cause);
 }

@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Consultas por crédito (`/consulta/{service}/credits`).
 /// Requires `Authorization: Bearer` (no DeviceToken).

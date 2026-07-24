@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// OCR / Google Vision (`/recognize/{action}`).
 /// Device-based (requires DeviceToken).

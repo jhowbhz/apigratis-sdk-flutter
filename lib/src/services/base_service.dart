@@ -11,7 +11,7 @@ abstract class BaseService {
   ApiHttpClient get http => _http;
 
   /// Builds the full URL for an endpoint.
-  String buildUrl(String path) => _http.joinUrl(_http.baseUrl, path);
+  String buildUrl(String path) => joinUrl(_http.baseUrl, path);
 
   /// Executes a GET request.
   Future<Json> get(String path, [RequestOptions options = const RequestOptions()]) =>
@@ -55,5 +55,6 @@ abstract class BaseService {
     Object? body,
     RequestOptions options = const RequestOptions(),
   ]) =>
-      _http.bytes(HttpMethod.get, path, body: body, options: options.copyWith(responseType: ResponseType.bytes));
+      _http.bytes(HttpMethod.get, path,
+          body: body, options: options.copyWith(responseType: ResponseType.bytes));
 }

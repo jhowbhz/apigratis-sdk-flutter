@@ -11,8 +11,7 @@ Credentials _$CredentialsFromJson(Map<String, dynamic> json) => Credentials(
       bearerToken: json['bearerToken'] as String,
     );
 
-Map<String, dynamic> _$CredentialsToJson(Credentials instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CredentialsToJson(Credentials instance) => <String, dynamic>{
       'deviceToken': instance.deviceToken,
       'bearerToken': instance.bearerToken,
     };
@@ -30,13 +29,11 @@ Map<String, dynamic> _$BodyToJson(Body instance) => <String, dynamic>{
     };
 
 ApiRequest _$ApiRequestFromJson(Map<String, dynamic> json) => ApiRequest(
-      credentials:
-          Credentials.fromJson(json['credentials'] as Map<String, dynamic>),
+      credentials: Credentials.fromJson(json['credentials'] as Map<String, dynamic>),
       body: Body.fromJson(json['body'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ApiRequestToJson(ApiRequest instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ApiRequestToJson(ApiRequest instance) => <String, dynamic>{
       'credentials': instance.credentials,
       'body': instance.body,
     };
