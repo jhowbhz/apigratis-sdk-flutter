@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Catálogo de APIs, planos, docs e servidores (`/apis`, `/plan`, `/servers`, `/catalog`).
 class CatalogService extends BaseService {

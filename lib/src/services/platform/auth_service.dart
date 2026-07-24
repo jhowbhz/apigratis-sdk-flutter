@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Login, 2FA, cadastro, senha e perfil (`/auth/{action}`).
 /// Requer apenas `Authorization: Bearer` (após login).

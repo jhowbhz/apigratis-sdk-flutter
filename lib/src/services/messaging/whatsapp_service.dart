@@ -1,10 +1,11 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// WhatsApp device-based API (`POST /whatsapp/{action}`).
 /// Requires `Authorization: Bearer` + `DeviceToken`.
 class WhatsAppService extends DeviceProxyService {
-  WhatsAppService(super.http) : super(http, 'whatsapp');
+  WhatsAppService(ApiHttpClient http) : super(http, 'whatsapp');
 
   /// Starts the device session (accepts optional webhooks).
   Future<Json> start([Json? body, RequestOptions options = const RequestOptions()]) =>
@@ -147,7 +148,8 @@ class WhatsAppService extends DeviceProxyService {
       request('getAllChats', body, options);
 
   /// Gets all chats with messages.
-  Future<Json> getAllChatsWithMessages([Json? body, RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getAllChatsWithMessages(
+          [Json? body, RequestOptions options = const RequestOptions()]) =>
       request('getAllChatsWithMessages', body, options);
 
   /// Gets all contacts.
@@ -171,11 +173,13 @@ class WhatsAppService extends DeviceProxyService {
       request('getAllNewMessages', body, options);
 
   /// Gets auto download settings.
-  Future<Json> getAutoDownloadSettings([Json? body, RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getAutoDownloadSettings(
+          [Json? body, RequestOptions options = const RequestOptions()]) =>
       request('getAutoDownloadSettings', body, options);
 
   /// Sets auto download settings.
-  Future<Json> setAutoDownloadSettings(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> setAutoDownloadSettings(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('setAutoDownloadSettings', body, options);
 
   /// Gets battery level.
@@ -203,7 +207,8 @@ class WhatsAppService extends DeviceProxyService {
       request('getCommonGroups', body, options);
 
   /// Gets community participants.
-  Future<Json> getCommunityParticipants(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getCommunityParticipants(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('getCommunityParticipants', body, options);
 
   /// Gets connection state.
@@ -219,7 +224,8 @@ class WhatsAppService extends DeviceProxyService {
       request('getGroupAdmins', body, options);
 
   /// Gets group info from invite link.
-  Future<Json> getGroupInfoFromInviteLink(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getGroupInfoFromInviteLink(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('getGroupInfoFromInviteLink', body, options);
 
   /// Gets group invite link.
@@ -235,7 +241,8 @@ class WhatsAppService extends DeviceProxyService {
       request('getGroupMembersIds', body, options);
 
   /// Gets group membership requests.
-  Future<Json> getGroupMembershipRequests(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getGroupMembershipRequests(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('getGroupMembershipRequests', body, options);
 
   /// Gets group size limit.
@@ -259,7 +266,8 @@ class WhatsAppService extends DeviceProxyService {
       request('getPhoneNumberByLid', body, options);
 
   /// Gets platform from message.
-  Future<Json> getPlatformFromMessage(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> getPlatformFromMessage(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('getPlatformFromMessage', body, options);
 
   /// Gets products.
@@ -327,7 +335,8 @@ class WhatsAppService extends DeviceProxyService {
       request('openChat', body, options);
 
   /// Promotes community participant.
-  Future<Json> promoteCommunityParticipant(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> promoteCommunityParticipant(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('promoteCommunityParticipant', body, options);
 
   /// Promotes participant.
@@ -343,7 +352,8 @@ class WhatsAppService extends DeviceProxyService {
       request('removeParticipant', body, options);
 
   /// Removes subgroups from community.
-  Future<Json> removeSubgroupsCommunity(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> removeSubgroupsCommunity(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('removeSubgroupsCommunity', body, options);
 
   /// Replies to a message.
@@ -371,7 +381,8 @@ class WhatsAppService extends DeviceProxyService {
       request('setGroupSubject', body, options);
 
   /// Sets messages admins only.
-  Future<Json> setMessagesAdminsOnly(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> setMessagesAdminsOnly(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('setMessagesAdminsOnly', body, options);
 
   /// Sets profile name.
@@ -427,7 +438,8 @@ class WhatsAppService extends DeviceProxyService {
       request('deleteMessage', body, options);
 
   /// Downloads media by message.
-  Future<Json> downloadMediaByMessage(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> downloadMediaByMessage(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('downloadMediaByMessage', body, options);
 
   /// Forwards messages.
@@ -443,11 +455,13 @@ class WhatsAppService extends DeviceProxyService {
       request('addParticipant', body, options);
 
   /// Adds subgroups to community.
-  Future<Json> addSubgroupsCommunity(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> addSubgroupsCommunity(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('addSubgroupsCommunity', body, options);
 
   /// Approves group membership request.
-  Future<Json> approveGroupMembershipRequest(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> approveGroupMembershipRequest(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('approveGroupMembershipRequest', body, options);
 
   /// Archives a chat.
@@ -463,7 +477,8 @@ class WhatsAppService extends DeviceProxyService {
       request('closeChat', body, options);
 
   /// Demotes community participant.
-  Future<Json> demoteCommunityParticipant(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> demoteCommunityParticipant(Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       request('demoteCommunityParticipant', body, options);
 
   /// Demotes participant.
@@ -475,6 +490,7 @@ class WhatsAppService extends DeviceProxyService {
       request('fila', body, options);
 
   /// Executes any action asynchronously via queue: `POST /whatsapp/{action}/queue`.
+  @override
   Future<Json> queue(String action, [Json? body, RequestOptions options = const RequestOptions()]) {
     final path = 'whatsapp/$action/queue';
     return http.post(path, body, options);

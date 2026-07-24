@@ -1,6 +1,6 @@
-export 'base_service.dart';
-export 'device_proxy_service.dart';
-export 'credit_service.dart';
-export 'messaging.dart';
-export 'data.dart';
-export 'platform.dart';
+export 'services/base_service.dart';
+export 'services/device_proxy_service.dart';
+export 'services/credit_service.dart';
+export 'services/messaging.dart';
+export 'services/data.dart';
+export 'services/platform.dart';

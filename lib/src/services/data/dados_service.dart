@@ -1,9 +1,10 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// Dados cadastrais device-based (`/dados/{action}`): CPF, CNPJ, lista sócios, CNAEs, etc.
 class DadosService extends DeviceProxyService {
-  DadosService(super.http) : super(http, 'dados');
+  DadosService(ApiHttpClient http) : super(http, 'dados');
 
   /// Consulta CPF: `POST /dados/cpf` body `{'cpf': '...'}`.
   Future<Json> cpf(Json body, [RequestOptions options = const RequestOptions()]) =>

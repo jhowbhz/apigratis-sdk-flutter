@@ -1,10 +1,11 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// SMS device-based API (`POST /sms/{action}` and `/sms/send/credits`).
 /// Requires `Authorization: Bearer` + `DeviceToken`.
 class SmsService extends DeviceProxyService {
-  SmsService(super.http) : super(http, 'sms');
+  SmsService(ApiHttpClient http) : super(http, 'sms');
 
   /// Sends an SMS via device: `POST /sms/send`.
   /// Fields: `number`, `message`, `operator`, `user_reply`, `webhook_url`.
@@ -18,6 +19,6 @@ class SmsService extends DeviceProxyService {
   }
 
   /// Sends an SMS via queue (async): `POST /sms/send/queue`.
-  Future<Json> queue(Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> sendQueue(Json body, [RequestOptions options = const RequestOptions()]) =>
       request('send/queue', body, options);
 }

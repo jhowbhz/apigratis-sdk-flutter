@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Saldo, faturas, notificações, tickets (`/account/{action}` e `/balance`, `/invoices`, etc).
 class AccountService extends BaseService {
@@ -30,7 +30,8 @@ class AccountService extends BaseService {
       http.post('tickets', body, options);
 
   /// Responde ticket: `POST /tickets/{id}/messages`.
-  Future<Json> replyTicket(String id, Json body, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> replyTicket(String id, Json body,
+          [RequestOptions options = const RequestOptions()]) =>
       http.post('tickets/$id/messages', body, options);
 
   /// Perfil da conta: `GET /account/profile`.
@@ -42,8 +43,7 @@ class AccountService extends BaseService {
       http.put('account/profile', body, options);
 
   /// Planos: `GET /plan`.
-  Future<Json> plan([RequestOptions options = const RequestOptions()]) =>
-      http.get('plan', options);
+  Future<Json> plan([RequestOptions options = const RequestOptions()]) => http.get('plan', options);
 
   /// Recargas: `GET /recharges`.
   Future<Json> recharges([RequestOptions options = const RequestOptions()]) =>

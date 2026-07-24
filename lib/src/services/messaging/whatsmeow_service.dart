@@ -1,10 +1,11 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// WhatsMeow API (`POST /whatsmeow/{action}`).
 /// Uses DeviceToken for authentication.
 class WhatsMeowService extends DeviceProxyService {
-  WhatsMeowService(super.http) : super(http, 'whatsmeow');
+  WhatsMeowService(ApiHttpClient http) : super(http, 'whatsmeow');
 
   /// Instance operations
   Future<Json> createInstance(Json body, [RequestOptions options = const RequestOptions()]) =>

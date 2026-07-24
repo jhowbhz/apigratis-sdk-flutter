@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Execução em lote (`/bulk/*`).
 class BulkService extends BaseService {
@@ -14,6 +14,5 @@ class BulkService extends BaseService {
       http.get('bulk/$id', options);
 
   /// Lista jobs: `GET /bulk`.
-  Future<Json> list([RequestOptions options = const RequestOptions()]) =>
-      http.get('bulk', options);
+  Future<Json> list([RequestOptions options = const RequestOptions()]) => http.get('bulk', options);
 }

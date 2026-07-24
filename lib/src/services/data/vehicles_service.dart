@@ -1,9 +1,10 @@
-import 'device_proxy_service.dart';
-import '../core/types.dart';
+import '../device_proxy_service.dart';
+import '../../core/http_client.dart';
+import '../../core/types.dart';
 
 /// Veículos por placa (`/vehicles/{action}` e `/vehicles/fipe`).
 class VehiclesService extends DeviceProxyService {
-  VehiclesService(super.http) : super(http, 'vehicles');
+  VehiclesService(ApiHttpClient http) : super(http, 'vehicles');
 
   /// Dados do veículo: `POST /vehicles/dados` body `{'placa': '...'}`.
   Future<Json> dados(Json body, [RequestOptions options = const RequestOptions()]) =>

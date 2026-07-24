@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Correios (`/correios/{action}`).
 class CorreiosService extends BaseService {

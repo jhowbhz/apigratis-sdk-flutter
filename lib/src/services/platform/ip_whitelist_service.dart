@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// IP Whitelist da conta (`/ip-whitelist/{action}`).
 class IpWhitelistService extends BaseService {

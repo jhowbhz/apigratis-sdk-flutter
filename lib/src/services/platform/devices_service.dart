@@ -1,5 +1,5 @@
 import '../base_service.dart';
-import '../core/types.dart';
+import '../../core/types.dart';
 
 /// Gestão de devices (`/devices/{action}`).
 class DevicesService extends BaseService {
@@ -14,7 +14,7 @@ class DevicesService extends BaseService {
       http.post('devices', body, options);
 
   /// Busca device: `GET /devices/{id}`.
-  Future<Json> get(String id, [RequestOptions options = const RequestOptions()]) =>
+  Future<Json> show(String id, [RequestOptions options = const RequestOptions()]) =>
       http.get('devices/$id', options);
 
   /// Atualiza device: `PUT /devices/{id}`.
@@ -22,8 +22,8 @@ class DevicesService extends BaseService {
       http.put('devices/$id', body, options);
 
   /// Remove device: `DELETE /devices/{id}`.
-  Future<Json> delete(String id, [RequestOptions options = const RequestOptions()]) =>
-      http.delete('devices/$id', options);
+  Future<Json> remove(String id, [RequestOptions options = const RequestOptions()]) =>
+      http.delete('devices/$id', null, options);
 
   /// Requisições do device: `GET /devices/{id}/requests`.
   Future<Json> requests(String id, [RequestOptions options = const RequestOptions()]) =>
